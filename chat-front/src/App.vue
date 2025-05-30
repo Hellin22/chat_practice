@@ -1,47 +1,36 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { ref, onMounted } from 'vue';
+
+const ws = ref(null);
+const input = ref('');
+const messages = ref([]);
+
+const connect = () => {
+  ws.value = new WebSocket("ws://localhost:8080/ws/chat");
+
+  ws.value.onmessage = (event) => {
+    messages.value.push(event.data);
+  };
+};
+
+const send = () => {
+  if (ws.value && ws.value.readyState === WebSocket.OPEN) {
+    ws.value.send(input.value);
+    input.value = '';
+  }
+};
+
+onMounted(() => {
+  connect();
+});
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div>
+    <input v-model="input" @keyup.enter="send" placeholder="메시지 입력" />
+    <button @click="send">전송</button>
+    <ul>
+      <li v-for="(msg, index) in messages" :key="index">{{ msg }}</li>
+    </ul>
+  </div>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
