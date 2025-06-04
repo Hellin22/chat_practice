@@ -1,0 +1,47 @@
+package practice.chatstomp.stomp.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.web.socket.config.annotation.*;
+
+@Configuration
+@EnableWebSocketMessageBroker
+public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
+
+    @Override
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
+        registry.addEndpoint("/stomp-chat")
+                // 클라이언트 ws 요청(ws 연결)을 위한 엔드포인트.
+                .setAllowedOrigins("http://localhost:5173")
+                .withSockJS();
+                // SockJS를 통해서 ws를 지원하지 않는 브라우저도 fallback으로 연결이 가능하게 함.
+                // ex) http://localhost:5173/stomp-chat 으로도 연결 가능하게함. (ws가 아닌 polling 방식 등으로)
+    }
+
+    @Override
+    public void configureMessageBroker(MessageBrokerRegistry registry) {
+
+//      클라이언트가 메시지를 구독(수신 - subscribe)할 때 사용할 prefix 설정 - /queue는 1대1 , /topic은 1대다 채팅방을 의미
+//      registry.enableSimpleBroker("/queue", "/topic");
+        registry.enableSimpleBroker("/topic");
+        // 쉬운 말로 설명하자면 broker의 채널을 설정하는건데 채팅 기준으로 /topic은 채팅방에 전파(1대다), /queue는 멤버에 전파(1대1)
+
+        // 메시지를 발행(송신 - publish)할때 사용하는 prefix 설정
+        registry.setApplicationDestinationPrefixes("/app");
+        // @MessageMapping의 처음에 오는 prefix를 설정.
+        // /app/roomId/1 -> 이런식으로 오면 prefix의 /app을 떼고 /roomId/{roomId}로 처리됨.
+        // 이후에는 convertAndSend로 브로커에게 메시지 브로드캐스트 요청
+        // sub가 선행되고 이게 수행되어야함.(메시지 전송 같은 것들)
+        // 이건 Spring Controller를 거침(db 저장, 인증 등)
+
+        // -> 관습상 저렇게 prefix를 구성하는거지 바꿔도 가능함.
+    }
+
+
+    @Override
+    public void configureWebSocketTransport(WebSocketTransportRegistration registration) {
+        registration.setMessageSizeLimit(8192)
+                .setSendTimeLimit(15 * 1000)
+                .setSendBufferSizeLimit(3 * 512 * 1024);
+    }
+}

@@ -1,0 +1,41 @@
+server:
+  port: 8081
+
+spring:
+  # PostgreSQL ??
+  datasource:
+    url: ${POS_DATABASE_URL}
+    username: ${POS_DATABASE_USERNAME}
+    password: ${POS_DATABASE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  # JPA ??
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # MongoDB ??
+  data:
+    mongodb:
+      uri: ${MONG_DATABASE_URI}
+
+  # Kafka tjfwjd
+  application:
+    name: ${APP_NAME}
+  kafka:
+    consumer:
+      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
+      group-id: ${KAFKA_GROUP_ID}
+      auto-offset-reset: ${KAFKA_AUTO_OFFSET_RESET}
+      key-deserializer: ${KAFKA_KEY_DESERIALIZER}
+      value-deserializer: ${KAFKA_VALUE_DESERIALIZER}
+    producer:
+      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
+      key-serializer: ${KAFKA_KEY_SERIALIZER}
+      value-serializer: ${KAFKA_VALUE_SERIALIZER}
+
