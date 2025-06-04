@@ -1,0 +1,34 @@
+server:
+  port: 8080
+
+spring:
+
+  # mariadb
+  datasource:
+    url: ${MARIADB_URI} # jdbc:mariadb://localhost:3306/chatdb
+    username: ${MARIADB_USERNAME} # challengers
+    password: ${MARIADB_PASSWORD} # challengers
+    driver-class-name: org.mariadb.jdbc.Driver
+
+  # JPA
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MariaDBDialect
+
+  # mongodb
+  data:
+    mongodb:
+      uri: ${MONGODB_URI} # mongodb://localhost:27017/challengers
+
+  # rabbitMQ
+  rabbitmq:
+    host: ${RAB_HOST}
+    port: ${RAB_PORT}
+    username: ${RAB_USERNAME}
+    password: ${RAB_PASSWORD}
+#    virtual-host: ${RAB_VHOST} # 기본값 '/'
