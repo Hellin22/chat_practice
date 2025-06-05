@@ -27,8 +27,8 @@ spring:
 
   # rabbitMQ
   rabbitmq:
-    host: ${RAB_HOST}
-    port: ${RAB_PORT}
-    username: ${RAB_USERNAME}
-    password: ${RAB_PASSWORD}
+    host: ${RMQ_HOST}
+    port: ${RMQ_PORT}
+    username: ${RMQ_USERNAME}
+    password: ${RMQ_PASSWORD}
 #    virtual-host: ${RAB_VHOST} # 기본값 '/'

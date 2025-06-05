@@ -66,7 +66,7 @@ public class ChatMessageService {
         // 우리는 @Id를 통해서 pk를 설정했기 때문에 중복 문제는 발생 x -> 특수한 상황을 고려해서 중복 처리 안하겠다는 의미
 
         // Websocket을 통해 메시지 직접 전송 - Client(front)에서는 /topic/message/방번호 를 구독(sub)하고 있는 client만 채팅을 받음
-        simpMessagingTemplate.convertAndSend("/topic/message/" + roomId, chatMessageDto);
+        simpMessagingTemplate.convertAndSend("/topic/message." + roomId, chatMessageDto);
     }
 
     public Boolean isFirstJoin(String roomId, String memberId) {

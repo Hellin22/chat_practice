@@ -65,7 +65,7 @@ public class ChatRoomService {
         ChatRoom updateChatRoom = chatRoomRepository.save(chatRoom);
 
         // 채팅방에 있는 사용자들에게 업데이트 된 채팅방 정보 전송
-        simpMessagingTemplate.convertAndSend("/topic/room/" + roomId + "/update", updateChatRoom);
+        simpMessagingTemplate.convertAndSend("/topic/room." + roomId + ".update", updateChatRoom);
 
         return updateChatRoom;
     }

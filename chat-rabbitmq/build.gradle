@@ -38,6 +38,9 @@ dependencies {
     // RabbitMQ
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'com.fasterxml.jackson.core:jackson-core:2.16.1'
+
+    // Netty
+    implementation 'io.projectreactor.netty:reactor-netty:1.1.21'
 }
 
 tasks.named('test') {
