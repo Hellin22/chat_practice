@@ -119,7 +119,7 @@ const connectWebSocket = () => {
     console.log('웹 소켓 연결 시도 중...')
     connectionStatus.value = '웹 소켓에 연결 중...'
 
-    const socket = new SockJS('http://localhost:8080/stomp-chat', null, {
+    const socket = new SockJS('http://localhost:8080/rabbitmq-chat', null, {
         transports: ['websocket', 'xhr-streaming', 'xhr-polling'],          // websocket 지원하지 않을 시, 대체 방식
     })
     console.log('SockJS 인스턴스 생성됨')
@@ -138,7 +138,7 @@ const connectWebSocket = () => {
             connectionStatus.value = '연결됨'
 
             // 사용자별 채팅방 목록 업데이트 구독 (async를 통해서 메시지가 도착했을 때, 실행되는 비동기 콜백 함수)
-            stompClient.value.subscribe(`/topic/user/${memberId.value}/rooms/update`, async response => {
+            stompClient.value.subscribe(`/topic/user.${memberId.value}.rooms.update`, async response => {
 
                 const updatedRooms = JSON.parse(response.body);
 
@@ -221,7 +221,7 @@ const connectToNewRoom = async () => {
 
             // 채팅방 정보 업데이트 구독 설정
             subscriptions.value[`${currentRoom.value}-update`] = stompClient.value.subscribe(
-                `/topic/room/${currentRoom.value}/update`,
+                `/topic/room.${currentRoom.value}.update`,
                 response => {
                     const updatedRoom = JSON.parse(response.body);
                     const index = rooms.value.findIndex(room => room.id === updatedRoom.id);
@@ -259,7 +259,7 @@ const subscribeToRoom = (roomId) => {
     }
 
     // 채팅 메시지 구독
-    subscriptions.value[roomId] = stompClient.value.subscribe(`/topic/message/${roomId}`, message => {
+    subscriptions.value[roomId] = stompClient.value.subscribe(`/topic/message.${roomId}`, message => {
         console.log('메시지 수신:', message);
         if (!messagesPerRoom.value[roomId]) {
             messagesPerRoom.value[roomId] = [];
@@ -270,7 +270,7 @@ const subscribeToRoom = (roomId) => {
     });
 
     // 채팅방 정보 업데이트 구독
-    subscriptions.value[`${roomId}-update`] = stompClient.value.subscribe(`/topic/room/${roomId}/update`, response => {
+    subscriptions.value[`${roomId}-update`] = stompClient.value.subscribe(`/topic/room.${roomId}.update`, response => {
         const updatedRoom = JSON.parse(response.body);
         // 현재 채팅방 목록에서 해당 방 정보 업데이트
         const index = rooms.value.findIndex(room => room.id === updatedRoom.id);
