@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  app1:
+    build:
+      context: ./chat-stomp-sync
+    container_name: spring-app1
+    ports:
+      - "8081:8080"
+    networks:
+      - backend
+
+  app2:
+    build:
+      context: ./chat-stomp-sync
+    container_name: spring-app2
+    ports:
+      - "8082:8080"
+    networks:
+      - backend
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-gateway
+    ports:
+      - "80:80"  # 프론트에서는 http://localhost/ws 로 접속 | http 요청은 /health로 접속(vite 설정 완)
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app1
+      - app2
+    networks:
+      - backend
+
+networks:
+  backend:

@@ -1,4 +1,4 @@
-package practice.chatstomp.stomp.config;
+package practice.chatstomp.stomp.cors;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
