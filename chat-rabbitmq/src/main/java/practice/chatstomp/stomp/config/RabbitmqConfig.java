@@ -48,6 +48,9 @@ public class RabbitmqConfig {
                 .bind(chatQueue)
                 .to(chatExchange)
                 .with("chat.routing.key");
+                // /topic/xxx.yyy로 들어온 메시지를 내부적으로 amq.topic exchange로 라우팅 처리
+                // convertAndSend("/topic/message.1")은
+                // exchange: amq.topic, routing key: message.1 로 메시지를 publish 하는것
     }
 
     // 4. ConnectionFactory 구성 - application.yml 파일과 연결

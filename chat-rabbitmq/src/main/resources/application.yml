@@ -32,3 +32,11 @@ spring:
     username: ${RMQ_USERNAME}
     password: ${RMQ_PASSWORD}
 #    virtual-host: ${RAB_VHOST} # 기본값 '/'
+
+logging:
+  level:
+    org.springframework.messaging: DEBUG
+    org.springframework.web.socket: DEBUG
+    org.springframework.web.socket.messaging: DEBUG
+    org.springframework.web.socket.sockjs: DEBUG
+    org.springframework.messaging.simp: DEBUG
