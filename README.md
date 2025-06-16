@@ -91,8 +91,15 @@ public void sendMessage(@DestinationVariable String roomId, String message) {
 <br>
 
 ### e. rabbitmq 브로커 연동을 통한 채팅
-![rabbitmq 간단 테스트](https://github.com/Hellin22/chat_practice/blob/main/img-gif/rabbitmq%20%EA%B0%84%EB%8B%A8%20%ED%85%8C%EC%8A%A4%ED%8A%B8.gif)
+- stomp 프론트 연동 방법  
+![stomp 프론트 사용법](https://github.com/Hellin22/chat_practice/blob/main/img-gif/stomp%20%ED%94%84%EB%A1%A0%ED%8A%B8%20%EC%82%AC%EC%9A%A9%EB%B2%95.png)
 
+😂 백엔드 먼저 켜주셔야 연결돼요!
+
+<br>
+
+- rabbitmq 테스트
+![rabbitmq 간단 테스트](https://github.com/Hellin22/chat_practice/blob/main/img-gif/rabbitmq%20%EA%B0%84%EB%8B%A8%20%ED%85%8C%EC%8A%A4%ED%8A%B8.gif)
 
 <br>
 
