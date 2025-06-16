@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import practice.chatstomp.stomp.dto.ChatMessageDto;
 import practice.chatstomp.stomp.service.ChatMessageService;
@@ -17,10 +18,12 @@ import java.util.List;
 @Slf4j
 public class ChatMessageController {
     private final ChatMessageService chatMessageService;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
     @Autowired
-    public ChatMessageController(ChatMessageService chatMessageService) {
+    public ChatMessageController(ChatMessageService chatMessageService, SimpMessagingTemplate simpMessagingTemplate) {
         this.chatMessageService = chatMessageService;
+        this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
     // Websocket 으로 부터 넘어오는 메시지 처리
@@ -43,14 +46,14 @@ public class ChatMessageController {
         chatMessageService.sendMessage(roomId, chatMessageDto);
     }
 
-//    private String roomId;
-//    private String sender;
-//    private String message;
-//    private ChatMessageDto.MessageType type;
+    // https://jiangxy.github.io/websocket-debug-tool/ 사용시 위에꺼 주석하고 아래꺼 사용
+//    @MessageMapping("{roomId}")
+//    public void sendMessage(@DestinationVariable String roomId, String message) {
+//        log.info("roomId: " + roomId + ", message: " + message);
 //
-//    public enum MessageType {
-//        ENTER, CHAT, LEAVE
+//        simpMessagingTemplate.convertAndSend("/topic/message." + roomId, message);
 //    }
+
     @GetMapping("/{roomId}/message") // 채팅방 접속시에 해당 채팅방에 있는 채팅 메시지 가져오기
     public List<ChatMessageDto> getRoomMessages(@PathVariable String roomId, @RequestParam String memberId) {
 

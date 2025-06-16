@@ -27,6 +27,8 @@ public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint("/rabbitmq-chat")
                 // 클라이언트 ws 요청(ws 연결)을 위한 엔드포인트.
                 .setAllowedOrigins("http://localhost:5173")
+                // https://jiangxy.github.io/websocket-debug-tool/ 사용시 위아래 주석 변경
+//                .setAllowedOrigins("https://jiangxy.github.io")
                 .withSockJS();
                 // SockJS를 통해서 ws를 지원하지 않는 브라우저도 fallback으로 연결이 가능하게 함.
                 // ex) http://localhost:5173/stomp-chat 으로도 연결 가능하게함. (ws가 아닌 polling 방식 등으로)
