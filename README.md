@@ -25,12 +25,16 @@ docker run -d 	// Detached 모드 (백그라운드 실행)
 rabbitmq:3-management	 // 사용하는 Docker 이미지 이름
 ```
 
+<br>
+
 ### b. rabbitmq stomp plugin 설치
 ![image](https://github.com/user-attachments/assets/00cc7f94-4688-40cf-a588-36aeb6fc938d)
 ```
 rabbitmq-plugins enable rabbitmq_stomp 
 ```
 빨간색 CLI에 위 명령어를 통해서 설치
+
+<br>
 
 ### c. 환경변수 설정  
 
@@ -46,6 +50,8 @@ rabbitmq-plugins enable rabbitmq_stomp
 | RMQ_USERNAME | guest  |
 
 😊 마리아 디비(rdb)의 경우에는 user, db 미리 생성해놓아야 합니다.
+
+<br>
 
 ### d. db 의존성 없이 간단하게 실습 with chat_rabbitmq, 아래 uri(프론트)
 (프론트) chat-front -> https://jiangxy.github.io/websocket-debug-tool/  
@@ -82,8 +88,10 @@ public void sendMessage(@DestinationVariable String roomId, String message) {
 }
 ```
 
+<br>
 
-gif 주소
+### e. rabbitmq 브로커 연동을 통한 채팅
+![rabbitmq 간단 테스트](https://github.com/Hellin22/chat_practice/blob/main/img-gif/rabbitmq%20%EA%B0%84%EB%8B%A8%20%ED%85%8C%EC%8A%A4%ED%8A%B8.gif)
 
 
 <br>
