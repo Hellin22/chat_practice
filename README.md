@@ -112,3 +112,11 @@ public void sendMessage(@DestinationVariable String roomId, String message) {
    - 여러개(현재는 3개)의 클라이언트가 다른 Spring 서버에 붙도록 구성하여 SimpleBroker의 pub/sub 동기화 문제 구현
    - SimpleBroker는 Spring 서버 내 메모리 기반 브로커이므로, 서로 다른 서버간 pub/sub 동기화가 불가능
    - gif에서 한 사용자가 보낸 메시지를 다른 서버에 연결된 사용자가 받지 못하는 현상 확인 가능
+
+<br>
+
+## 4. RabbitMQ 사용시 동기화 문제 해결 (WITH chat-sync-rabbitmq)
+   ![RabbitMQ 동기화 테스트](https://github.com/Hellin22/chat_practice/blob/main/img-gif/RabbitMQ%20%EB%8F%99%EA%B8%B0%ED%99%94%20%ED%85%8C%EC%8A%A4%ED%8A%B8.gif)  
+   - 외부 메시지 브로커인 RabbitMQ를 통해 서버간 WebSocket 세션 공유 없이도 메시지 동기화 가능
+   - Spring 내장 브로커인 Simple Broker에서 발생하던 세션 정보 불일치 문제를 해결해, 확장성 있는 구조로 전환
+   - 서버 수를 수평확장해도 메시지 유실 없이 실시간 채팅 가능
