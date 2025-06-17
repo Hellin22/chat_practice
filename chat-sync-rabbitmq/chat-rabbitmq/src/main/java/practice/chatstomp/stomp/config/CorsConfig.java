@@ -15,3 +15,4 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedHeaders("*");               // 모든 HTTP 헤더 허용
     }
 }
+// 이거만하면 잘 되는듯?

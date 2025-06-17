@@ -1,0 +1,42 @@
+server:
+  port: 8080
+
+spring:
+
+  # mariadb
+  datasource:
+    url: jdbc:mariadb://host.docker.internal:3306/chatdb
+    username: challengers
+    password: challengers
+    driver-class-name: org.mariadb.jdbc.Driver
+
+  # JPA
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MariaDBDialect
+
+  # mongodb
+  data:
+    mongodb:
+      uri: mongodb://host.docker.internal:27017/challengers;
+
+  # rabbitMQ
+  rabbitmq:
+    host: rabbitmq-v2
+    port: 5672
+    username: guest
+    password: guest
+#    virtual-host: ${RAB_VHOST} # 기본값 '/'
+
+logging:
+  level:
+    org.springframework.messaging: DEBUG
+    org.springframework.web.socket: DEBUG
+    org.springframework.web.socket.messaging: DEBUG
+    org.springframework.web.socket.sockjs: DEBUG
+    org.springframework.messaging.simp: DEBUG

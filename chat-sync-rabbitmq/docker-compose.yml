@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  app1:
+    build:
+      context: ./chat-rabbitmq
+      dockerfile: Dockerfile
+    container_name: spring-rmq-app1
+    ports:
+      - "8081:8080"
+    networks:
+      - backend
+
+  app2:
+    build:
+      context: ./chat-rabbitmq
+      dockerfile: Dockerfile
+    container_name: spring-rmq-app2
+    ports:
+      - "8082:8080"
+    networks:
+      - backend
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq-v2
+    ports:
+      - "5672:5672"     # AMQP
+      - "15672:15672"   # Management UI (http://localhost:15672, guest/guest)
+      - "61613:61613"
+    networks:
+      - backend
+
+networks:
+  backend:
+
+# docker-compose up --build
+# docker build -t <자동 생성된 이미지 이름> ./chat-stomp-sync (자동으로 해줌)
+# docker run -p 8081:8080 <이미지> (자동으로 해줌)
+# 이후에는 컨테이너로 뜨게됨.
+
+
